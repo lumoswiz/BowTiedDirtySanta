@@ -28,3 +28,7 @@ Optional specifications:
 - Pricing mechanism (e.g. VRGDA, Dutch auction).
 
 ## Testing
+
+## Acknowledgements
+
+- [FrankieIsLost](https://twitter.com/FrankieIsLost) for the gradual Dutch auction [repo](https://github.com/FrankieIsLost/gradual-dutch-auction).
