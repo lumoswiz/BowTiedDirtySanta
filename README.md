@@ -32,4 +32,6 @@ Optional specifications:
 ## Acknowledgements
 
 - [FrankieIsLost](https://twitter.com/FrankieIsLost) for the gradual Dutch auction [repo](https://github.com/FrankieIsLost/gradual-dutch-auction).
-- [PRBMath](https://github.com/paulrberg/prb-math).
+- [Solmate](https://github.com/transmissions11/solmate).
+- [Transmissions11](https://twitter.com/transmissions11) for VRGDA [repo](https://github.com/transmissions11/VRGDAs).
+- OpenZeppelin: [Extending Contracts](https://docs.openzeppelin.com/contracts/3.x/extending-contracts#using-hooks).

@@ -17,7 +17,9 @@ contract DirtySanta is ERC721, GDA, Ownable {
 
     error DirtySanta__Underpaid();
 
-    error DirtySanta__WalletBalanceNonZero();
+    error DirtySanta__CannotExceedWalletLimit();
+
+    error DirtySanta__SwapsAndMintingDisabled();
 
     /// -----------------------------------------------------------------------
     /// Constants
@@ -52,9 +54,6 @@ contract DirtySanta is ERC721, GDA, Ownable {
     function mint() external payable returns (uint256 mintedId) {
         if (totalSold > MAX_MINTABLE) revert DirtySanta__MaximumAlreadyMinted();
 
-        if (balanceOf(msg.sender) != 0)
-            revert DirtySanta__WalletBalanceNonZero();
-
         uint256 price = getGDAPrice(
             toDaysWadUnsafe(block.timestamp - startTime),
             mintedId = totalSold++
@@ -65,5 +64,28 @@ contract DirtySanta is ERC721, GDA, Ownable {
         _mint(msg.sender, mintedId);
 
         SafeTransferLib.safeTransferETH(msg.sender, msg.value - price);
+    }
+
+    /// -----------------------------------------------------------------------
+    /// Transfer logic
+    /// -----------------------------------------------------------------------
+
+    /// -----------------------------------------------------------------------
+    /// Overrides
+    /// -----------------------------------------------------------------------
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal virtual override {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+
+        if (block.timestamp >= 1671886800)
+            revert DirtySanta__SwapsAndMintingDisabled();
+
+        if (balanceOf(msg.sender) != 0)
+            revert DirtySanta__CannotExceedWalletLimit();
     }
 }
