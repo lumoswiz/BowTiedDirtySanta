@@ -60,7 +60,7 @@ contract DirtySantaTest is Test {
     }
 
     function test_mintingStopsAtChristmas() public {
-        vm.warp(1671886800);
+        vm.warp(1671926400);
         startHoax(alice);
 
         vm.expectRevert();
@@ -144,7 +144,7 @@ contract DirtySantaTest is Test {
 
         uint256 tokenId = nft.mint{value: price}();
 
-        vm.warp(1671886800);
+        vm.warp(1671926400);
 
         vm.expectRevert(
             DirtySanta.DirtySanta__SwapsAndMintingDisabled.selector
@@ -216,5 +216,12 @@ contract DirtySantaTest is Test {
         changePrank(bob);
         vm.expectRevert(DirtySanta.DirtySanta__CannotBeStolen.selector);
         nft.steal(tokenIdC, tokenIdB);
+    }
+
+    function test_tokenURI() public {
+        startHoax(alice);
+        uint256 tokenId = nft.mint{value: uint256(INITIAL_PRICE)}();
+
+        emit log_string(nft.tokenURI(tokenId));
     }
 }

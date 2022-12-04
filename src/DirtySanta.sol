@@ -59,6 +59,11 @@ contract DirtySanta is ERC721, GDA, Ownable {
     mapping(uint256 => uint256) public stolenCount;
 
     /// -----------------------------------------------------------------------
+    /// Token URI storage
+    /// -----------------------------------------------------------------------
+    string private _baseURIExtended;
+
+    /// -----------------------------------------------------------------------
     /// Constructor
     /// -----------------------------------------------------------------------
     constructor(
@@ -68,7 +73,9 @@ contract DirtySanta is ERC721, GDA, Ownable {
     )
         ERC721("Dirty Santa", "DIRTYSANTA")
         GDA(_initialPrice, _scaleFactor, _decayConstant)
-    {}
+    {
+        _baseURIExtended = "ipfs://DiRtYSaNTaB6Hkt3X2oX2bxC63fVRUq5SdEwSteS22bC2Z/";
+    }
 
     /// -----------------------------------------------------------------------
     /// Minting logic
@@ -95,7 +102,7 @@ contract DirtySanta is ERC721, GDA, Ownable {
 
     function steal(uint256 tokenId, uint256 targetTokenId) external {
         /*=== Checks ===*/
-        if (block.timestamp >= 1671886800)
+        if (block.timestamp >= 1671926400)
             revert DirtySanta__SwapsAndMintingDisabled();
 
         if (_exists(targetTokenId) != true)
@@ -135,10 +142,14 @@ contract DirtySanta is ERC721, GDA, Ownable {
     ) internal virtual override {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
 
-        if (block.timestamp >= 1671886800)
+        if (block.timestamp >= 1671926400)
             revert DirtySanta__SwapsAndMintingDisabled();
 
         if (balanceOf(msg.sender) != 0)
             revert DirtySanta__CannotExceedWalletLimit();
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return _baseURIExtended;
     }
 }
