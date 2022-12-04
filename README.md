@@ -21,6 +21,7 @@ Problem specification from project brief:
   - Minting enabled upon contract deployment.
   - Maximum mintable: 1000.
 - [x] After minting, users can swap their NFT for another eligible NFT.
+  - Users can steal an eligible `targetTokenId` by offering up their NFT with `tokenId` in exchange.
 - [x] Each wallet can only hold one NFT at any time.
   - Checked in the `_beforeTokenTransfer` hook.
 - [x] Each NFT can only be stolen twice, then it is protected from future swap attempts.
